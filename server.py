@@ -1,55 +1,39 @@
-import socket
-import threading
-import time
+import asyncio
+import websockets
+import json
 
-class Server:
-    def __init__(self):
-        self.host = 'localhost'
-        self.port = 9999
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server.bind((self.host, self.port))
-        print("Server started and listening on {}:{}".format(self.host, self.port))
+buzz_lock = False
+buzz_queue = []
+host_socket = None
 
-        self.clients = {}
-        self.buzz_lock = threading.Lock()
-        self.buzz_allowed = False
-        self.buzzes = []
+async def handle_client(websocket, path):
+    global buzz_lock
+    global buzz_queue
+    global host_socket
+    username = await websocket.recv()
+    print(f"{username} has connected")
 
-    def start(self):
-        self.server.listen()
-        while True:
-            client, address = self.server.accept()
-            username = client.recv(1024).decode('utf-8')  # receive username from client
-            self.clients[username] = client
-            print("{} has connected".format(username))
-            thread = threading.Thread(target=self.handle_client, args=(client, username,))
-            thread.start()
+    if username == "host":
+        host_socket = websocket
 
-    def handle_client(self, client, username):
-        while True:
-            message = client.recv(1024).decode('utf-8')
-            if message == "LOCK":
-                with self.buzz_lock:
-                    self.buzz_allowed = False
-                print("Buzzing is now locked")
-            elif message == "UNLOCK":
-                with self.buzz_lock:
-                    self.buzz_allowed = True
-                print("Buzzing is now unlocked")
-            elif message == "BUZZ":
-                if not self.buzz_allowed:
-                    client.send("TIMEOUT".encode('utf-8'))
-                    print("{} buzzed too early, timeout imposed".format(username))
-                    time.sleep(3)  # pause this client for 3 seconds
-                else:
-                    self.buzzes.append(username)
-                    print("{} buzzed in!".format(username))
-            elif message == "CLEAR":
-                buzzes = self.buzzes.copy()
-                self.buzzes.clear()
-                print("Buzzes cleared, order was: {}".format(buzzes))
-                client.send(str(buzzes).encode('utf-8'))
+    async for message in websocket:
+        if message == "BUZZ":
+            if buzz_lock and username not in buzz_queue:
+                print(f"{username} buzzed in!")
+                buzz_queue.append(username)
+                if host_socket:
+                    await host_socket.send(json.dumps({"queue": buzz_queue}))
+            else:
+                await websocket.send("PENALTY")
+        elif message == "LOCK":
+            buzz_lock = False
+            buzz_queue = []
+            if host_socket:
+                await host_socket.send(json.dumps({"queue": buzz_queue}))
+        elif message == "UNLOCK":
+            buzz_lock = True
 
-if __name__ == "__main__":
-    server = Server()
-    server.start()
+start_server = websockets.serve(handle_client, "0.0.0.0", 9999)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()

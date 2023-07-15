@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+#connection_status {
+  position: absolute;
+  top: 10px;
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+#status {
+  position: absolute;
+  top: 40px;
+}
+
+button {
+  font-size: 3em;
+  padding: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: yellow;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+button:hover {
+  background-color: #ffaa22;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-7px);
+}
+
+button:disabled {
+  background-color: #ddd;
+  color: #666;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+</style>
+</head>
+<body>
+
+<p id="connection_status">Connecting...</p>
+<p id="status"></p>
+
+<button id="buzzButton" onclick="buzz()">BUZZ</button>
+
+<script>
+let server = window.prompt("What server are you trying to connect to?");
+let socket = new WebSocket("wss://" + server);
+let buzzButton = document.getElementById("buzzButton");
+
+
+socket.onopen = function(e) {
+  let username = window.prompt("Enter your name:");
+  document.getElementById("status").textContent = username.toLowerCase() + " is willing to risk it all";
+  document.getElementById("connection_status").textContent = "Connected!";
+  document.getElementById("connection_status").style.color = "green";
+  socket.send(username);
+};
+
+socket.onmessage = function(event) {
+    let message = event.data;
+    if (message == "PENALTY") {
+        buzzButton.disabled = true;
+        setTimeout(function() {
+            buzzButton.disabled = false;
+        }, 3000);
+    }
+};
+
+socket.onerror = function(error) {
+  alert(`WebSocket error: ${error}`);
+};
+
+function buzz() {
+  socket.send("BUZZ");
+}
+</script>
+
+</body>
+</html>

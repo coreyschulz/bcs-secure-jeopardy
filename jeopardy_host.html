@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Host Panel - BCS Secure Jeopardy</title>
+    <style>
+        body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        h1 {
+            position: absolute;
+            top: 10px;
+            font-size: 2em;
+            margin: 0;
+        }
+        .switchContainer {
+            position: absolute;
+            top: 200px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 120px;
+            height: 68px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 68px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 52px;
+            width: 52px;
+            left: 8px;
+            bottom: 8px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #FFD700;
+        }
+        input:checked + .slider:before {
+            transform: translateX(52px);
+        }
+        #queue {
+            position: absolute;
+            top: 400px;
+        }
+        #queue ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #queue li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Host Panel</h1>
+    </br></br>
+    <h2>BCS Secure Jeopardy</h2>
+    <div class="switchContainer">
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitch">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div id="queue"></div>
+
+    <script>
+        let server = window.prompt("What server are you trying to connect to?");
+        let socket = new WebSocket("wss://" + server);
+
+        let toggleSwitch = document.getElementById("toggleSwitch");
+        let queueDiv = document.getElementById("queue");
+
+        socket.onopen = function(e) {
+            socket.send("host");
+        };
+
+        socket.onmessage = function(event) {
+            let message = JSON.parse(event.data);
+            if (message.queue) {
+                let listHtml = message.queue.map(username => "<li>" + username + "</li>").join("");
+                queueDiv.innerHTML = "<ul>" + listHtml + "</ul>";
+            }
+        };
+
+        toggleSwitch.onchange = function() {
+            if (toggleSwitch.checked) {
+                socket.send("UNLOCK");
+            } else {
+                socket.send("LOCK");
+            }
+        };
+    </script>
+</body>
+</html>
