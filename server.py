@@ -27,6 +27,12 @@ async def handle_client(websocket, path):
             else:
                 print(f"{username} buzzed in but was denied!")
                 await websocket.send("PENALTY")
+
+        elif message == "BOOT":
+            if buzz_queue:
+                buzz_queue.pop(0)
+            await update_clients()
+
         elif message == "LOCK":
             buzz_lock = False
             buzz_queue = []

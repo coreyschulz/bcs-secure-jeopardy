@@ -76,13 +76,30 @@ button:disabled {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
+
+@keyframes glow {
+  0% {
+    background-color: black;
+  }
+  50% {
+    background-color: crimson;
+  }
+  100% {
+    background-color: black;
+  }
+}
+
+body.glowing {
+  animation: glow 2s ease-in-out infinite;
+}
+
 </style>
 </head>
 <body>
 
 <p id="connection_status">Connecting...</p>
 <p id="status"></p>
-<p id="penalty_message">PENALTY!</p>
+<p id="penalty_message">CAN'T RIG IT</p>
 <div id="queue"></div>
 <button id="buzzButton" onclick="buzz()">BUZZ</button>
 
@@ -126,8 +143,11 @@ socket.onmessage = function(event) {
     } else if (message.queue) {
         let listHtml = message.queue.map(username => "<li>" + username + "</li>").join("");
         queueDiv.innerHTML = "<ul>" + listHtml + "</ul>";
-        if (message.queue.includes(local_username)) {
+        if (message.queue.length > 0 && message.queue[0] === local_username) {
+            document.body.classList.add("glowing");
             confetti();
+        } else {
+            document.body.classList.remove("glowing");
         }
     }
 };

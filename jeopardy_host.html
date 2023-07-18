@@ -75,6 +75,27 @@
         #queue li {
             margin-bottom: 5px;
         }
+        button {
+            position: absolute;
+            top: 300px;
+            font-size: 1.5em;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: crimson;
+            color: black;
+            cursor: pointer;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease 0s;
+        }
+        button:hover {
+            background-color: #f92f2f;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-7px);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -87,6 +108,7 @@
             <span class="slider"></span>
         </label>
     </div>
+    <button id="bootButton" onclick="bootPlayer()">Boot Player</button>
     <div id="queue"></div>
 
     <script>
@@ -115,6 +137,10 @@
                 socket.send("LOCK");
             }
         };
+
+        function bootPlayer() {
+            socket.send("BOOT");
+        }
     </script>
 </body>
 </html>
