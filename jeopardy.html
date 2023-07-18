@@ -44,11 +44,37 @@ button:hover {
   transform: translateY(-7px);
 }
 
+#queue {
+  position: absolute;
+  top: 120px;
+}
+
+#queue ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#queue li {
+  margin-bottom: 5px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
 button:disabled {
   background-color: #ddd;
   color: #666;
   box-shadow: none;
   cursor: not-allowed;
+}
+
+#penalty_message {
+  position: absolute;
+  top: 150px;
+  font-size: 2em;
+  color: red;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 </style>
 </head>
@@ -56,30 +82,53 @@ button:disabled {
 
 <p id="connection_status">Connecting...</p>
 <p id="status"></p>
-
+<p id="penalty_message">PENALTY!</p>
+<div id="queue"></div>
 <button id="buzzButton" onclick="buzz()">BUZZ</button>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 <script>
 let server = window.prompt("What server are you trying to connect to?");
 let socket = new WebSocket("wss://" + server);
 let buzzButton = document.getElementById("buzzButton");
+let queueDiv = document.getElementById("queue");
+let penaltyMessage = document.getElementById("penalty_message");
 
+let local_username;
+
+function setUsername() {
+  local_username = window.prompt("Please enter your username:");
+}
+
+setUsername();
 
 socket.onopen = function(e) {
-  let username = window.prompt("Enter your name:");
-  document.getElementById("status").textContent = username.toLowerCase() + " is willing to risk it all";
+  document.getElementById("status").textContent = local_username.toLowerCase() + " is willing to risk it all";
   document.getElementById("connection_status").textContent = "Connected!";
   document.getElementById("connection_status").style.color = "green";
-  socket.send(username);
+  socket.send(local_username);
 };
 
 socket.onmessage = function(event) {
-    let message = event.data;
+    let message;
+    try {
+        message = JSON.parse(event.data);
+    } catch (e) {
+        message = event.data;
+    }
     if (message == "PENALTY") {
         buzzButton.disabled = true;
+        penaltyMessage.style.opacity = "1";
         setTimeout(function() {
             buzzButton.disabled = false;
+            penaltyMessage.style.opacity = "0";
         }, 3000);
+    } else if (message.queue) {
+        let listHtml = message.queue.map(username => "<li>" + username + "</li>").join("");
+        queueDiv.innerHTML = "<ul>" + listHtml + "</ul>";
+        if (message.queue.includes(local_username)) {
+            confetti();
+        }
     }
 };
 
