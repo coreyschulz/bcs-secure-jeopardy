@@ -103,6 +103,26 @@ body.winning {
   animation: flashGreen 1s ease-in-out infinite;
 }
 
+#arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 40px solid white;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+    z-index: -1;
+}
+
+#buzzButton.active #arrow {
+    opacity: 1;
+    transform: translate(-50%, -200%);
+}
+
 </style>
 </head>
 <body>
@@ -111,8 +131,10 @@ body.winning {
 <p id="status"></p>
 <p id="penalty_message">CAN'T RIG IT</p>
 <div id="queue"></div>
-<button id="buzzButton" onclick="buzz()">BUZZ</button>
-
+<button id="buzzButton" onclick="buzz()">
+  BUZZ
+  <div id="arrow"></div>
+</button>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 <script>
 let server = window.prompt("What server are you trying to connect to?");
@@ -155,12 +177,12 @@ socket.onmessage = function(event) {
         queueDiv.innerHTML = "<ul>" + listHtml + "</ul>";
         if (message.queue.length > 0 && message.queue[0] === local_username) {
             document.body.classList.add("glowing");
-            confetti();
         } else {
             document.body.classList.remove("glowing");
         }
         if (message.win_player === local_username) {
                 document.body.classList.add("winning");
+                confetti();
                 setTimeout(function() {
                     document.body.classList.remove("winning");
                 }, 3000);
@@ -173,7 +195,11 @@ socket.onerror = function(error) {
 };
 
 function buzz() {
-  socket.send("BUZZ");
+    buzzButton.classList.add('active');
+    socket.send("BUZZ");
+    setTimeout(function() {
+        buzzButton.classList.remove('active');
+    }, 500); // Adjust this delay as needed
 }
 </script>
 
