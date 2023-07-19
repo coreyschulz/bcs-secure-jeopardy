@@ -33,6 +33,13 @@ async def handle_client(websocket, path):
                 buzz_queue.pop(0)
             await update_clients()
 
+        elif message == "WIN":
+            if buzz_queue:
+                win_player = buzz_queue.pop(0)
+                buzz_queue = []
+                buzz_lock = False
+                await update_clients(win_player)
+
         elif message == "LOCK":
             buzz_lock = False
             buzz_queue = []
@@ -42,9 +49,9 @@ async def handle_client(websocket, path):
 
     clients.remove(websocket)
 
-async def update_clients():
+async def update_clients(win_player=None):
     if clients:
-        message = json.dumps({"queue": buzz_queue})
+        message = json.dumps({"queue": buzz_queue, "win_player": win_player})
         tasks = [asyncio.create_task(client.send(message)) for client in clients]
         await asyncio.wait(tasks)
 

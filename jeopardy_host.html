@@ -66,7 +66,7 @@
         }
         #queue {
             position: absolute;
-            top: 400px;
+            top: 500px;
         }
         #queue ul {
             list-style-type: none;
@@ -77,7 +77,7 @@
         }
         button {
             position: absolute;
-            top: 300px;
+            top: 400px;
             font-size: 1.5em;
             padding: 15px;
             border: none;
@@ -96,6 +96,21 @@
         button:active {
             transform: scale(0.95);
         }
+
+        #winButton {
+        position: absolute;
+        top: 300px;
+        background-color: limegreen;
+        color: white;
+        }
+
+        #winButton:hover {
+            background-color: darkgreen;
+        }
+
+        #winButton:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -108,7 +123,8 @@
             <span class="slider"></span>
         </label>
     </div>
-    <button id="bootButton" onclick="bootPlayer()">Boot Player</button>
+    <button id="bootButton" onclick="bootPlayer()">WRONG</button>
+    <button id="winButton" onclick="markWin()">Correct!</button>
     <div id="queue"></div>
 
     <script>
@@ -140,6 +156,11 @@
 
         function bootPlayer() {
             socket.send("BOOT");
+        }
+
+        function markWin() {
+            socket.send("WIN");
+            toggleSwitch.checked = false;
         }
     </script>
 </body>

@@ -93,6 +93,16 @@ body.glowing {
   animation: glow 2s ease-in-out infinite;
 }
 
+@keyframes flashGreen {
+  0% { background-color: black; }
+  50% { background-color: lime; }
+  100% { background-color: black; }
+}
+
+body.winning {
+  animation: flashGreen 1s ease-in-out infinite;
+}
+
 </style>
 </head>
 <body>
@@ -148,6 +158,12 @@ socket.onmessage = function(event) {
             confetti();
         } else {
             document.body.classList.remove("glowing");
+        }
+        if (message.win_player === local_username) {
+                document.body.classList.add("winning");
+                setTimeout(function() {
+                    document.body.classList.remove("winning");
+                }, 3000);
         }
     }
 };
