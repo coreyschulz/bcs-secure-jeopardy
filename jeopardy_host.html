@@ -66,7 +66,7 @@
         }
         #queue {
             position: absolute;
-            top: 500px;
+            top: 600px;
         }
         #queue ul {
             list-style-type: none;
@@ -96,20 +96,35 @@
         button:active {
             transform: scale(0.95);
         }
-
         #winButton {
         position: absolute;
         top: 300px;
         background-color: limegreen;
         color: white;
         }
-
-        #winButton:hover {
+        #finalJeopardyButton {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: blue;
+        color: white;
+        }
+        #winButton:hover, #finalJeopardyButton:hover {
             background-color: darkgreen;
         }
-
-        #winButton:active {
+        #winButton:active, #finalJeopardyButton:active {
             transform: scale(0.95);
+        }
+        #finalAnswers {
+            position: absolute;
+            top: 700px;
+        }
+        #finalAnswers ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #finalAnswers li {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -125,7 +140,9 @@
     </div>
     <button id="bootButton" onclick="bootPlayer()">WRONG</button>
     <button id="winButton" onclick="markWin()">Correct!</button>
+    <button id="finalJeopardyButton" onclick="startFinalJeopardy()">Final Jeopardy</button>
     <div id="queue"></div>
+    <div id="finalAnswers"></div>
 
     <script>
         let server = window.prompt("What server are you trying to connect to?");
@@ -133,16 +150,35 @@
 
         let toggleSwitch = document.getElementById("toggleSwitch");
         let queueDiv = document.getElementById("queue");
+        let finalAnswersDiv = document.getElementById("finalAnswers");
 
         socket.onopen = function(e) {
             socket.send("host");
         };
 
         socket.onmessage = function(event) {
-            let message = JSON.parse(event.data);
+            let message = event.data;
+
+            // Check if the message is a JSON string
+            if (message[0] === '{') {
+                try {
+                    message = JSON.parse(message);
+                } catch (e) {
+                    console.error('Error parsing JSON', e);
+                }
+            }
+
             if (message.queue) {
                 let listHtml = message.queue.map(username => "<li>" + username + "</li>").join("");
                 queueDiv.innerHTML = "<ul>" + listHtml + "</ul>";
+            }
+            if (typeof message === "string" && message.startsWith("FINAL_ANSWER:")) {
+                let components = message.split(":");
+                let username = components[1];
+                let answer = components[2];
+                let listItem = document.createElement("li");
+                listItem.textContent = username + ": " + answer;
+                finalAnswersDiv.appendChild(listItem);
             }
         };
 
@@ -160,6 +196,11 @@
 
         function markWin() {
             socket.send("WIN");
+            toggleSwitch.checked = false;
+        }
+
+        function startFinalJeopardy() {
+            socket.send("FINAL");
             toggleSwitch.checked = false;
         }
     </script>

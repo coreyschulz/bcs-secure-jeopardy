@@ -6,11 +6,13 @@ buzz_lock = False
 buzz_queue = []
 host_socket = None
 clients = set()
+final_answers = {}
 
 async def handle_client(websocket, path):
     global buzz_lock
     global buzz_queue
     global host_socket
+    global final_answers
     clients.add(websocket)
     username = await websocket.recv()
     print(f"{username} has connected")
@@ -46,6 +48,17 @@ async def handle_client(websocket, path):
             await update_clients()
         elif message == "UNLOCK":
             buzz_lock = True
+
+        elif message == "FINAL":
+            for client in clients:
+                if client != host_socket:
+                    await client.send("FINAL")
+
+        elif message.startswith("FINAL_ANSWER:"):
+            _, answer = message.split(":", 1)
+            final_answers[username] = answer
+            if host_socket:
+                await host_socket.send(f"FINAL_ANSWER:{username}:{answer}")
 
     clients.remove(websocket)
 

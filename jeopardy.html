@@ -123,6 +123,51 @@ body.winning {
     transform: translate(-50%, -200%);
 }
 
+#finalAnswer {
+  display: none;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+#finalAnswerButton {
+  display: none;
+  font-size: 2em;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: limegreen;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+#finalAnswerButton:hover {
+  background-color: darkgreen;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-7px);
+}
+
+#finalAnswerButton:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulseBlue {
+  0% {
+    background-color: black;
+  }
+  50% {
+    background-color: blue;
+  }
+  100% {
+    background-color: black;
+  }
+}
+
+body.finalJeopardy {
+  animation: pulseBlue 4s ease-in-out infinite;
+}
+
 </style>
 </head>
 <body>
@@ -130,20 +175,27 @@ body.winning {
 <p id="connection_status">Connecting...</p>
 <p id="status"></p>
 <p id="penalty_message">CAN'T RIG IT</p>
+<p id="sent_message" style="display: none; font-style: italic;">Sent!</p>
 <div id="queue"></div>
 <button id="buzzButton" onclick="buzz()">
   BUZZ
   <div id="arrow"></div>
 </button>
+<input type="text" id="finalAnswer">
+<button id="finalAnswerButton" onclick="sendFinalAnswer()">Send</button>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 <script>
 let server = window.prompt("What server are you trying to connect to?");
 let socket = new WebSocket("wss://" + server);
 let buzzButton = document.getElementById("buzzButton");
+let finalAnswerInput = document.getElementById("finalAnswer");
+let finalAnswerButton = document.getElementById("finalAnswerButton");
+let sentMessage = document.getElementById("sent_message");
 let queueDiv = document.getElementById("queue");
 let penaltyMessage = document.getElementById("penalty_message");
 
 let local_username;
+let finalAnswerSent = false;
 
 function setUsername() {
   local_username = window.prompt("Please enter your username:");
@@ -172,6 +224,11 @@ socket.onmessage = function(event) {
             buzzButton.disabled = false;
             penaltyMessage.style.opacity = "0";
         }, 3000);
+    } else if (message == "FINAL") {
+        buzzButton.style.display = "none";
+        finalAnswerInput.style.display = "block";
+        finalAnswerButton.style.display = "block";
+        document.body.classList.add("finalJeopardy");
     } else if (message.queue) {
         let listHtml = message.queue.map(username => "<li>" + username + "</li>").join("");
         queueDiv.innerHTML = "<ul>" + listHtml + "</ul>";
@@ -200,6 +257,17 @@ function buzz() {
     setTimeout(function() {
         buzzButton.classList.remove('active');
     }, 500); // Adjust this delay as needed
+}
+
+function sendFinalAnswer() {
+    if (!finalAnswerSent) {
+        let answer = finalAnswerInput.value;
+        socket.send("FINAL_ANSWER:" + answer);
+        finalAnswerInput.style.display = "none";
+        finalAnswerButton.style.display = "none";
+        sentMessage.style.display = "block";
+        finalAnswerSent = true;
+    }
 }
 </script>
 
