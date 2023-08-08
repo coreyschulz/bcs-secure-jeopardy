@@ -186,7 +186,6 @@ body.finalJeopardy {
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 <script>
 let server = window.prompt("What server are you trying to connect to?");
-let socket = new WebSocket("wss://" + server);
 let buzzButton = document.getElementById("buzzButton");
 let finalAnswerInput = document.getElementById("finalAnswer");
 let finalAnswerButton = document.getElementById("finalAnswerButton");
@@ -203,6 +202,7 @@ function setUsername() {
 
 setUsername();
 
+let socket = new WebSocket("wss://" + server);
 socket.onopen = function(e) {
   document.getElementById("status").textContent = local_username.toLowerCase() + " is willing to risk it all";
   document.getElementById("connection_status").textContent = "Connected!";
