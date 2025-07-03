@@ -861,3 +861,75 @@ TypeError: handle_client() missing 1 required positional argument: 'path'
 2025-07-02 18:36:20,614 - INFO - Server shutting down
 2025-07-02 18:36:20,614 - WARNING - Host disconnected
 2025-07-02 18:36:20,615 - INFO - Server stopped by user
+2025-07-02 18:51:38,375 - INFO - Starting BCS Secure Jeopardy Server on port 9999
+2025-07-02 18:51:38,377 - INFO - server listening on 0.0.0.0:9999
+2025-07-02 18:51:38,377 - INFO - Server started successfully
+2025-07-02 18:51:56,283 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:51:56,285 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:51:56,286 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:51:56,292 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: missing Connection header
+2025-07-02 18:51:56,294 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: missing Connection header
+2025-07-02 18:51:56,294 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: missing Connection header
+2025-07-02 18:52:13,338 - INFO - connection open
+2025-07-02 18:52:13,431 - INFO - Client host connected from ('127.0.0.1', 60776)
+2025-07-02 18:52:37,250 - INFO - connection open
+2025-07-02 18:52:37,340 - INFO - Client bcs man connected from ('127.0.0.1', 60779)
+2025-07-02 18:52:55,014 - INFO - connection open
+2025-07-02 18:52:55,110 - INFO - Client bcs boy connected from ('127.0.0.1', 60782)
+2025-07-02 18:53:05,046 - INFO - bcs man buzzed in but was denied!
+2025-07-02 18:53:08,404 - INFO - bcs boy buzzed in but was denied!
+2025-07-02 18:53:12,323 - INFO - bcs boy buzzed in but was denied!
+2025-07-02 18:53:14,049 - INFO - Host unlocked buzzing
+2025-07-02 18:53:16,306 - INFO - bcs boy buzzed in!
+2025-07-02 18:53:19,206 - INFO - bcs man buzzed in!
+2025-07-02 18:53:23,073 - INFO - Host booted bcs boy
+2025-07-02 18:53:24,952 - INFO - Host marked bcs man as winner
+2025-07-02 18:53:37,605 - INFO - Client host disconnected
+2025-07-02 18:53:37,605 - WARNING - Host disconnected
+2025-07-02 18:53:39,769 - INFO - Server shutting down
+2025-07-02 18:53:39,771 - INFO - Server stopped by user
