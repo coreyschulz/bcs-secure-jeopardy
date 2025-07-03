@@ -214,6 +214,18 @@ async def handle_message(websocket, message, username):
         logger.info("Host started Final Jeopardy")
         await broadcast_to_clients("FINAL")
         
+    elif message == "WAGER_REQUEST" and websocket == host_socket:
+        logger.info("Host requested wagers")
+        await broadcast_to_clients("WAGER_REQUEST")
+        
+    elif message == "RESET_GAME" and websocket == host_socket:
+        logger.info("Host reset the game")
+        # Reset server game state
+        buzz_lock = False
+        buzz_queue = []
+        await broadcast_to_clients("RESET_GAME")
+        await update_clients()
+        
     elif message.startswith("FINAL_ANSWER:") and websocket != host_socket:
         # Validate final answer format and length
         try:
@@ -239,6 +251,40 @@ async def handle_message(websocket, message, username):
         except ValueError as e:
             logger.warning(f"Invalid final answer from {username}: {e}")
             await safe_send(websocket, json.dumps({"error": f"Invalid final answer: {e}"}))
+    
+    elif message.startswith("WAGER:") and websocket != host_socket:
+        # Validate wager format and value
+        try:
+            parts = message.split(":", 2)
+            if len(parts) < 3:
+                raise ValueError("Invalid wager format")
+            
+            wager_username = validate_input(parts[1], MAX_USERNAME_LENGTH, "Wager username")
+            wager_amount = parts[2].strip()
+            
+            # Verify username matches
+            if wager_username != username:
+                logger.warning(f"Username mismatch in wager from {username}")
+                await safe_send(websocket, json.dumps({"error": "Username mismatch"}))
+                return
+            
+            # Validate wager amount is numeric
+            try:
+                wager_value = int(wager_amount)
+                if wager_value < 0:
+                    raise ValueError("Wager must be non-negative")
+            except ValueError:
+                raise ValueError("Wager must be a valid number")
+            
+            formatted_message = f"WAGER:{wager_username}:{wager_amount}"
+            logger.info(f"Wager received from {username}: ${wager_amount}")
+            
+            if host_socket:
+                await safe_send(host_socket, formatted_message)
+                
+        except ValueError as e:
+            logger.warning(f"Invalid wager from {username}: {e}")
+            await safe_send(websocket, json.dumps({"error": f"Invalid wager: {e}"}))
     
     else:
         logger.warning(f"Unknown message from {username}: {message[:100]}")
