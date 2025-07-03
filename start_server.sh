@@ -122,15 +122,20 @@ echo ""
 echo "✅ Server is running!"
 
 if [ "$LOCAL_ONLY" = false ]; then
+    # Generate the join link
+    JOIN_LINK="https://bcsjeopardy.com/?code=$GAME_ID"
+    
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "🎮 GAME ID: $GAME_ID"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
+    echo "📱 Players can join at: $JOIN_LINK"
+    echo "🏠 Host panel: https://bcsjeopardy.com/host"
+    echo ""
     if [ ! -z "$CLIPBOARD_MSG" ]; then
         echo "$CLIPBOARD_MSG"
     fi
-    echo "📱 Players should enter this Game ID: $GAME_ID"
-    echo "🌐 Full ngrok URL: $NGROK_HOST"
+    echo "🌐 WebSocket URL: $NGROK_HOST"
     echo ""
 else
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
