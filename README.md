@@ -21,10 +21,10 @@ python3 server.py
 ```
 
 ### External Access
-For remote connections, expose the server using localtunnel:
+For remote connections, expose the server using ngrok:
 ```bash
 # In a separate terminal
-lt --port 9999
+ngrok http 9999
 ```
 
 ## 🎮 How to Use
