@@ -6,8 +6,18 @@
 
 ### Easy Startup (Recommended)
 ```bash
+# Start server with automatic ngrok tunnel
 ./start_server.sh
+
+# Or for local network play only
+./start_server.sh --local
 ```
+
+The script will:
+- Start the WebSocket server
+- Automatically launch ngrok for remote access
+- Display a **Game Code** (e.g., `9e07-162-218-220-223`) for players to join
+- Handle cleanup when you press Ctrl+C
 
 ### Manual Setup
 ```bash
@@ -18,20 +28,19 @@ pip install -r requirements.txt
 
 # Start the server
 python3 server.py
-```
 
-### External Access
-For remote connections, expose the server using ngrok:
-```bash
-# In a separate terminal
+# For remote access, in a separate terminal:
 ngrok http 9999
 ```
 
 ## 🎮 How to Use
 
-1. **Start the server** using one of the methods above
+1. **Start the server** using `./start_server.sh` to get a Game Code
 2. **Host Panel**: Open `http://localhost:8000/jeopardy_host.html` 
+   - Enter the Game Code when prompted
 3. **Players**: Open `http://localhost:8000/jeopardy.html`
+   - Enter the Game Code when prompted (e.g., `9e07-162-218-220-223`)
+   - Or use `localhost:9999` for local network play
 4. **Game Flow**:
    - Host unlocks buzzer using toggle switch
    - Players buzz in by clicking the yellow button
