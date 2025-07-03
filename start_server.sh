@@ -93,23 +93,6 @@ if [ "$LOCAL_ONLY" = false ]; then
 
     # Extract the game ID from the hostname
     GAME_ID=$(echo $NGROK_HOST | grep -o '^[^.]*')
-    
-    # Copy game ID to clipboard if possible
-    if command -v pbcopy &> /dev/null; then
-        # macOS
-        echo -n "$GAME_ID" | pbcopy
-        CLIPBOARD_MSG="📋 Game ID copied to clipboard!"
-    elif command -v xclip &> /dev/null; then
-        # Linux with xclip
-        echo -n "$GAME_ID" | xclip -selection clipboard
-        CLIPBOARD_MSG="📋 Game ID copied to clipboard!"
-    elif command -v xsel &> /dev/null; then
-        # Linux with xsel
-        echo -n "$GAME_ID" | xsel --clipboard --input
-        CLIPBOARD_MSG="📋 Game ID copied to clipboard!"
-    else
-        CLIPBOARD_MSG=""
-    fi
 fi
 
 # Start the Python server in the background
@@ -122,19 +105,17 @@ echo ""
 echo "✅ Server is running!"
 
 if [ "$LOCAL_ONLY" = false ]; then
-    # Generate the join link
+    # Generate the join links
     JOIN_LINK="https://bcsjeopardy.com/?code=$GAME_ID"
+    HOST_LINK="https://bcsjeopardy.com/host?code=$GAME_ID"
     
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "🎮 GAME ID: $GAME_ID"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
     echo "📱 Players can join at: $JOIN_LINK"
-    echo "🏠 Host panel: https://bcsjeopardy.com/host"
+    echo "🏠 Host panel: $HOST_LINK"
     echo ""
-    if [ ! -z "$CLIPBOARD_MSG" ]; then
-        echo "$CLIPBOARD_MSG"
-    fi
     echo "🌐 WebSocket URL: $NGROK_HOST"
     echo ""
 else
