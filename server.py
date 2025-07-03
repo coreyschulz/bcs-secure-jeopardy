@@ -129,8 +129,8 @@ async def handle_client(websocket):
                 logger.warning(f"New host connection replacing existing host")
             host_socket = websocket
 
-        # Send initial state to new client
-        await safe_send(websocket, json.dumps({"queue": buzz_queue}))
+        # Send initial state to all clients (including new one)
+        await update_clients()
 
         async for raw_message in websocket:
             client_data['last_heartbeat'] = time.time()
@@ -253,10 +253,10 @@ async def cleanup_client(websocket):
         is_host = client_info[websocket].get('is_host', False)
         
         # Remove from buzz queue if present
-        if username in buzz_queue:
+        was_in_queue = username in buzz_queue
+        if was_in_queue:
             buzz_queue.remove(username)
             logger.info(f"Removed {username} from buzz queue due to disconnect")
-            await update_clients()
         
         # Clear host socket if host disconnected
         if is_host and websocket == host_socket:
@@ -264,6 +264,10 @@ async def cleanup_client(websocket):
             logger.warning("Host disconnected")
         
         del client_info[websocket]
+        
+        # Update all clients with new connected players list
+        if not is_host:  # Only update if a non-host player disconnected
+            await update_clients()
     
     clients.discard(websocket)
 
@@ -284,8 +288,10 @@ async def update_clients(win_player=None):
     """Update all clients with current game state"""
     if not clients:
         return
-        
-    message = json.dumps({"queue": buzz_queue, "win_player": win_player})
+    
+    # Get list of connected non-host players
+    connected_names = [info['username'] for info in client_info.values() if info['username'] and not info['is_host']]
+    message = json.dumps({"queue": buzz_queue, "win_player": win_player, "connected_players": connected_names})
     failed_clients = []
     
     for client in clients.copy():  # Use copy to avoid modification during iteration

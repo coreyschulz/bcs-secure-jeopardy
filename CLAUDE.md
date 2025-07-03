@@ -81,10 +81,19 @@ tail -f jeopardy_server.log
 ```
 
 ### Test with Multiple Browsers
-1. Open Chrome: `http://localhost:8000/jeopardy.html`
-2. Open Firefox: `http://localhost:8000/jeopardy.html` 
-3. Open Safari: `http://localhost:8000/jeopardy.html`
-4. Open host panel: `http://localhost:8000/jeopardy_host.html`
+Use ngrok to expose the HTML files and test with multiple browsers:
+1. Serve HTML files: `python3 -m http.server 8000` (in a separate terminal)
+2. Start ngrok for HTTP: `ngrok http 8000` (in another terminal) 
+3. Use the provided ngrok URL (e.g., `https://abc123.ngrok.io`)
+4. Open Chrome: `https://abc123.ngrok.io/jeopardy.html`
+5. Open Firefox: `https://abc123.ngrok.io/jeopardy.html` 
+6. Open Safari: `https://abc123.ngrok.io/jeopardy.html`
+7. Open host panel: `https://abc123.ngrok.io/jeopardy_host.html`
+
+Note: You'll also need to expose the WebSocket server (port 9999) if clients are connecting remotely:
+```bash
+ngrok tcp 9999
+```
 
 ### Load Testing
 - Server can handle 50 concurrent connections
