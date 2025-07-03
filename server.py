@@ -88,7 +88,7 @@ def check_rate_limit(client_data: dict, limit_type: str = 'general') -> bool:
     client_data[messages_key].append(current_time)
     return True
 
-async def handle_client(websocket, path):
+async def handle_client(websocket):
     global buzz_lock, buzz_queue, host_socket
     
     # Check connection limit

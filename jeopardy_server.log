@@ -61,3 +61,803 @@ Traceback (most recent call last):
 websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
 2025-07-02 18:06:07,889 - INFO - Server shutting down
 2025-07-02 18:06:07,890 - INFO - Server stopped by user
+2025-07-02 18:09:35,299 - INFO - Starting BCS Secure Jeopardy Server on port 9999
+2025-07-02 18:09:35,301 - INFO - server listening on 0.0.0.0:9999
+2025-07-02 18:09:35,301 - INFO - Server started successfully
+2025-07-02 18:10:15,574 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:10:15,577 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: invalid Connection header: keep-alive
+2025-07-02 18:12:26,885 - INFO - Server shutting down
+2025-07-02 18:12:26,887 - INFO - Server stopped by user
+2025-07-02 18:13:48,643 - INFO - Starting BCS Secure Jeopardy Server on port 9999
+2025-07-02 18:13:48,645 - INFO - server listening on 0.0.0.0:9999
+2025-07-02 18:13:48,645 - INFO - Server started successfully
+2025-07-02 18:14:59,634 - INFO - Server shutting down
+2025-07-02 18:14:59,635 - INFO - Server stopped by user
+2025-07-02 18:15:49,146 - INFO - Starting BCS Secure Jeopardy Server on port 9999
+2025-07-02 18:15:49,148 - INFO - server listening on 0.0.0.0:9999
+2025-07-02 18:15:49,148 - INFO - Server started successfully
+2025-07-02 18:15:51,349 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:18:46,110 - INFO - Server shutting down
+2025-07-02 18:18:46,112 - INFO - Server stopped by user
+2025-07-02 18:20:59,887 - INFO - Starting BCS Secure Jeopardy Server on port 9999
+2025-07-02 18:20:59,888 - INFO - server listening on 0.0.0.0:9999
+2025-07-02 18:20:59,889 - INFO - Server started successfully
+2025-07-02 18:23:39,409 - INFO - connection open
+2025-07-02 18:23:39,410 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:23:47,710 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,714 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,715 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,726 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,733 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,734 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,739 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,740 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,741 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:23:47,741 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.reader.read_line,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+2025-07-02 18:26:15,278 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:26:15,281 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:26:15,282 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: missing Connection header
+2025-07-02 18:26:15,283 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: missing Connection header
+2025-07-02 18:26:15,306 - INFO - connection rejected (426 Upgrade Required)
+2025-07-02 18:26:15,306 - ERROR - opening handshake failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+    ...<3 lines>...
+    )
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+        "Connection", ", ".join(connection) if connection else None
+    )
+websockets.exceptions.InvalidUpgrade: missing Connection header
+2025-07-02 18:26:34,635 - INFO - connection open
+2025-07-02 18:26:34,636 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:35,956 - INFO - connection open
+2025-07-02 18:26:35,957 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:37,260 - INFO - connection open
+2025-07-02 18:26:37,260 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:38,556 - INFO - connection open
+2025-07-02 18:26:38,556 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:39,822 - INFO - connection open
+2025-07-02 18:26:39,823 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:41,172 - INFO - connection open
+2025-07-02 18:26:41,172 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:42,461 - INFO - connection open
+2025-07-02 18:26:42,462 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:43,750 - INFO - connection open
+2025-07-02 18:26:43,751 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:45,036 - INFO - connection open
+2025-07-02 18:26:45,036 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:46,245 - INFO - connection open
+2025-07-02 18:26:46,246 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:47,523 - INFO - connection open
+2025-07-02 18:26:47,523 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:48,792 - INFO - connection open
+2025-07-02 18:26:48,793 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:50,074 - INFO - connection open
+2025-07-02 18:26:50,075 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:51,330 - INFO - connection open
+2025-07-02 18:26:51,330 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:52,593 - INFO - connection open
+2025-07-02 18:26:52,594 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:53,872 - INFO - connection open
+2025-07-02 18:26:53,873 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:55,143 - INFO - connection open
+2025-07-02 18:26:55,143 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:56,406 - INFO - connection open
+2025-07-02 18:26:56,407 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:57,688 - INFO - connection open
+2025-07-02 18:26:57,688 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:26:58,935 - INFO - connection open
+2025-07-02 18:26:58,936 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:00,185 - INFO - connection open
+2025-07-02 18:27:00,185 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:01,464 - INFO - connection open
+2025-07-02 18:27:01,465 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:02,711 - INFO - connection open
+2025-07-02 18:27:02,712 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:03,990 - INFO - connection open
+2025-07-02 18:27:03,991 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:05,169 - INFO - connection open
+2025-07-02 18:27:05,169 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:06,454 - INFO - connection open
+2025-07-02 18:27:06,454 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:07,744 - INFO - connection open
+2025-07-02 18:27:07,744 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:09,011 - INFO - connection open
+2025-07-02 18:27:09,012 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:10,283 - INFO - connection open
+2025-07-02 18:27:10,283 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:11,549 - INFO - connection open
+2025-07-02 18:27:11,549 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:12,831 - INFO - connection open
+2025-07-02 18:27:12,832 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:14,104 - INFO - connection open
+2025-07-02 18:27:14,105 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:15,369 - INFO - connection open
+2025-07-02 18:27:15,369 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:16,569 - INFO - connection open
+2025-07-02 18:27:16,569 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:17,840 - INFO - connection open
+2025-07-02 18:27:17,841 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:19,118 - INFO - connection open
+2025-07-02 18:27:19,118 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:20,407 - INFO - connection open
+2025-07-02 18:27:20,407 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:21,691 - INFO - connection open
+2025-07-02 18:27:21,691 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:22,946 - INFO - connection open
+2025-07-02 18:27:22,946 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:24,242 - INFO - connection open
+2025-07-02 18:27:24,242 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:25,507 - INFO - connection open
+2025-07-02 18:27:25,507 - ERROR - connection handler failed
+Traceback (most recent call last):
+  File "/Users/coreyschulz/repos/bcs-secure-jeopardy/venv/lib/python3.13/site-packages/websockets/asyncio/server.py", line 376, in conn_handler
+    await self.handler(connection)
+          ~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: handle_client() missing 1 required positional argument: 'path'
+2025-07-02 18:27:51,723 - INFO - Server shutting down
+2025-07-02 18:27:51,724 - INFO - Server stopped by user
+2025-07-02 18:27:53,780 - INFO - Starting BCS Secure Jeopardy Server on port 9999
+2025-07-02 18:27:53,782 - INFO - server listening on 0.0.0.0:9999
+2025-07-02 18:27:53,782 - INFO - Server started successfully
+2025-07-02 18:28:11,438 - INFO - connection open
+2025-07-02 18:28:11,517 - INFO - Client corey connected from ('127.0.0.1', 59912)
+2025-07-02 18:28:40,642 - INFO - corey buzzed in but was denied!
+2025-07-02 18:28:44,788 - INFO - corey buzzed in but was denied!
+2025-07-02 18:28:48,915 - INFO - corey buzzed in but was denied!
+2025-07-02 18:28:52,247 - INFO - corey buzzed in but was denied!
+2025-07-02 18:28:55,973 - INFO - corey buzzed in but was denied!
+2025-07-02 18:34:45,149 - INFO - connection open
+2025-07-02 18:34:45,151 - INFO - Client host connected from ('127.0.0.1', 60118)
+2025-07-02 18:34:52,003 - INFO - corey buzzed in but was denied!
+2025-07-02 18:34:53,546 - INFO - Host unlocked buzzing
+2025-07-02 18:34:58,073 - INFO - corey buzzed in!
+2025-07-02 18:35:06,637 - INFO - Host locked buzzing
+2025-07-02 18:35:08,726 - INFO - Host unlocked buzzing
+2025-07-02 18:35:10,230 - INFO - corey buzzed in!
+2025-07-02 18:35:14,846 - INFO - Host booted corey
+2025-07-02 18:36:20,614 - INFO - Server shutting down
+2025-07-02 18:36:20,614 - WARNING - Host disconnected
+2025-07-02 18:36:20,615 - INFO - Server stopped by user
