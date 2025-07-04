@@ -269,13 +269,8 @@ async def handle_message(websocket, message, username):
                 await safe_send(websocket, json.dumps({"error": "Username mismatch"}))
                 return
             
-            # Validate wager amount is numeric
-            try:
-                wager_value = int(wager_amount)
-                if wager_value < 0:
-                    raise ValueError("Wager must be non-negative")
-            except ValueError:
-                raise ValueError("Wager must be a valid number")
+            # Validate wager amount (can be numeric or text)
+            wager_amount = validate_input(wager_amount, 50, "Wager amount")
             
             formatted_message = f"WAGER:{wager_username}:{wager_amount}"
             logger.info(f"Wager received from {username}: ${wager_amount}")
