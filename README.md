@@ -145,6 +145,45 @@ grep "ERROR" jeopardy_server.log
 - Player buzz patterns
 - Error recovery instances
 
+## 🪟 Windows Setup
+
+### Prerequisites
+- Python 3.7+ installed and added to PATH
+- For remote play, install ngrok:
+  1. Download from https://ngrok.com/download
+  2. Extract ngrok.exe to a folder
+  3. Add that folder to your PATH, or place ngrok.exe in the project directory
+
+### Quick Start (Windows)
+```cmd
+# Start server with automatic ngrok tunnel
+start_server.bat
+
+# Or for local network play only
+start_server.bat --local
+```
+
+### Manual Setup (Windows)
+```cmd
+# Create virtual environment and install dependencies
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+# Start the server
+python server.py
+
+# For remote access, in a separate terminal:
+ngrok http 9999
+```
+
+### Windows Notes
+- Use Command Prompt or PowerShell to run commands
+- Replace `python3` with `python` in all commands
+- Use `venv\Scripts\activate` instead of `source venv/bin/activate`
+- The server runs identically on Windows, Mac, and Linux
+- All features including automatic reconnection work cross-platform
+
 For detailed technical information, see [CLAUDE.md](./CLAUDE.md).
 
 ---
