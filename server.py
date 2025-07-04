@@ -209,6 +209,7 @@ async def handle_message(websocket, message, username):
     elif message == "UNLOCK" and websocket == host_socket:
         buzz_lock = True
         logger.info("Host unlocked buzzing")
+        await update_clients()
         
     elif message == "FINAL" and websocket == host_socket:
         logger.info("Host started Final Jeopardy")
@@ -337,7 +338,7 @@ async def update_clients(win_player=None):
     
     # Get list of connected non-host players
     connected_names = [info['username'] for info in client_info.values() if info['username'] and not info['is_host']]
-    message = json.dumps({"queue": buzz_queue, "win_player": win_player, "connected_players": connected_names})
+    message = json.dumps({"queue": buzz_queue, "win_player": win_player, "connected_players": connected_names, "buzz_lock": buzz_lock})
     failed_clients = []
     
     for client in clients.copy():  # Use copy to avoid modification during iteration
