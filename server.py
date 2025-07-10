@@ -294,6 +294,10 @@ async def handle_message(websocket, message, username):
             currently_drawing = []  # Clear the list when drawing mode ends
         logger.info(f"Host set drawing mode to {drawing_mode}")
         await broadcast_to_clients(f"DRAWING_MODE:{'ON' if drawing_mode else 'OFF'}")
+    
+    elif message == "CLEAR_DRAWINGS" and websocket == host_socket:
+        logger.info("Host clearing all drawings")
+        await broadcast_to_clients("CLEAR_DRAWINGS")
         
     elif message.startswith("DRAWING_SUBMIT:") and websocket != host_socket:
         if not drawing_mode:
@@ -322,10 +326,12 @@ async def handle_message(websocket, message, username):
                 await safe_send(websocket, json.dumps({"error": "Username mismatch"}))
                 return
             
-            # Forward to host
+            # Forward to host and all other clients
             if host_socket:
                 await safe_send(host_socket, message)
-                logger.info(f"Drawing received from {username}")
+                # Broadcast to all non-host clients
+                await broadcast_to_clients(message)
+                logger.info(f"Drawing received from {username}, broadcasting to all clients")
             else:
                 logger.warning(f"Drawing from {username} but no host connected")
                 
