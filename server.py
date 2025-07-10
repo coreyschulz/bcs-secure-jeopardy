@@ -22,6 +22,8 @@ buzz_queue = []
 host_socket = None
 clients: Set[websockets.WebSocketServerProtocol] = set()
 client_info: Dict[websockets.WebSocketServerProtocol, Dict] = {}
+drawing_mode = False
+currently_drawing = []  # Track who is currently drawing
 
 # Heartbeat configuration
 HEARTBEAT_INTERVAL = 30  # seconds
@@ -35,9 +37,10 @@ RATE_LIMIT_MAX_BUZZ = 3      # buzz attempts per window
 
 # Security configuration
 MAX_USERNAME_LENGTH = 50
-MAX_MESSAGE_LENGTH = 1000
+MAX_MESSAGE_LENGTH = 500000  # Increased to accommodate drawing submissions
 MAX_CLIENTS = 50
 MAX_FINAL_ANSWER_LENGTH = 500
+MAX_DRAWING_SIZE = 500000  # 500KB limit for drawing data
 
 def validate_input(text: str, max_length: int, field_name: str) -> str:
     """Validate and sanitize input text"""
@@ -163,7 +166,7 @@ async def handle_client(websocket):
         await cleanup_client(websocket)
 
 async def handle_message(websocket, message, username):
-    global buzz_lock, buzz_queue, host_socket
+    global buzz_lock, buzz_queue, host_socket, drawing_mode, currently_drawing
     
     client_data = client_info.get(websocket, {})
     
@@ -224,6 +227,8 @@ async def handle_message(websocket, message, username):
         # Reset server game state
         buzz_lock = False
         buzz_queue = []
+        drawing_mode = False
+        currently_drawing = []
         await broadcast_to_clients("RESET_GAME")
         await update_clients()
         
@@ -282,13 +287,59 @@ async def handle_message(websocket, message, username):
             logger.warning(f"Invalid wager from {username}: {e}")
             await safe_send(websocket, json.dumps({"error": f"Invalid wager: {e}"}))
     
+    elif message.startswith("DRAWING_MODE:") and websocket == host_socket:
+        mode = message.split(":")[1]
+        drawing_mode = (mode == "ON")
+        if not drawing_mode:
+            currently_drawing = []  # Clear the list when drawing mode ends
+        logger.info(f"Host set drawing mode to {drawing_mode}")
+        await broadcast_to_clients(f"DRAWING_MODE:{'ON' if drawing_mode else 'OFF'}")
+        
+    elif message.startswith("DRAWING_SUBMIT:") and websocket != host_socket:
+        if not drawing_mode:
+            logger.warning(f"Drawing submission from {username} rejected - drawing mode is off")
+            await safe_send(websocket, json.dumps({"error": "Drawing mode is not active"}))
+            return
+            
+        # Validate drawing submission size
+        if len(message) > MAX_DRAWING_SIZE:
+            logger.warning(f"Drawing submission from {username} too large: {len(message)} bytes")
+            await safe_send(websocket, json.dumps({"error": "Drawing is too large"}))
+            return
+            
+        try:
+            # Parse and validate drawing data
+            drawing_json = message[15:]  # Remove "DRAWING_SUBMIT:"
+            drawing_data = json.loads(drawing_json)
+            
+            # Validate required fields
+            if not all(key in drawing_data for key in ['username', 'timestamp', 'imageData']):
+                raise ValueError("Missing required fields in drawing submission")
+            
+            # Verify username matches
+            if drawing_data['username'] != username:
+                logger.warning(f"Username mismatch in drawing from {username}")
+                await safe_send(websocket, json.dumps({"error": "Username mismatch"}))
+                return
+            
+            # Forward to host
+            if host_socket:
+                await safe_send(host_socket, message)
+                logger.info(f"Drawing received from {username}")
+            else:
+                logger.warning(f"Drawing from {username} but no host connected")
+                
+        except (json.JSONDecodeError, ValueError) as e:
+            logger.warning(f"Invalid drawing submission from {username}: {e}")
+            await safe_send(websocket, json.dumps({"error": f"Invalid drawing: {e}"}))
+    
     else:
         logger.warning(f"Unknown message from {username}: {message[:100]}")
         await safe_send(websocket, json.dumps({"error": "Unknown message type"}))
 
 async def cleanup_client(websocket):
     """Clean up client connection and update game state"""
-    global host_socket
+    global host_socket, currently_drawing
     
     if websocket in client_info:
         username = client_info[websocket].get('username', 'unknown')
@@ -299,6 +350,11 @@ async def cleanup_client(websocket):
         if was_in_queue:
             buzz_queue.remove(username)
             logger.info(f"Removed {username} from buzz queue due to disconnect")
+        
+        # Remove from currently drawing list if present
+        if username in currently_drawing:
+            currently_drawing.remove(username)
+            logger.info(f"Removed {username} from currently drawing list due to disconnect")
         
         # Clear host socket if host disconnected
         if is_host and websocket == host_socket:
