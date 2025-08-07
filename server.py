@@ -3,6 +3,8 @@ import websockets
 import json
 import time
 import logging
+import uuid
+import os
 from typing import Set, Dict, Optional
 
 # Set up logging
@@ -25,9 +27,17 @@ client_info: Dict[websockets.WebSocketServerProtocol, Dict] = {}
 drawing_mode = False
 currently_drawing = []  # Track who is currently drawing
 
+# Host authentication
+host_password = os.environ.get('HOST_PASSWORD', str(uuid.uuid4()))
+logger.info(f"Host password: {host_password}")
+
+# Scorekeeping
+player_scores: Dict[str, int] = {}
+scoreboard_enabled = False
+
 # Heartbeat configuration
 HEARTBEAT_INTERVAL = 30  # seconds
-HEARTBEAT_TIMEOUT = 60   # seconds
+HEARTBEAT_TIMEOUT = 90   # seconds - Increased to be more tolerant of inactive tabs
 
 # Rate limiting configuration
 RATE_LIMIT_WINDOW = 60   # seconds
@@ -122,12 +132,27 @@ async def handle_client(websocket):
             await websocket.close(code=1008, reason=str(e))
             return
         
-        client_data['username'] = username
-        client_data['is_host'] = (username == "host")
+        # Check if this is a host connection with password
+        if username.startswith("host:"):
+            parts = username.split(":", 1)
+            if len(parts) == 2 and parts[1] == host_password:
+                username = "host"
+                client_data['is_host'] = True
+                logger.info(f"Host authenticated from {websocket.remote_address}")
+            else:
+                logger.warning(f"Invalid host password attempt from {websocket.remote_address}")
+                await websocket.close(code=1008, reason="Invalid host password")
+                return
+        else:
+            client_data['is_host'] = False
+            # Initialize score for new players
+            if username not in player_scores:
+                player_scores[username] = 0
         
+        client_data['username'] = username
         logger.info(f"Client {username} connected from {websocket.remote_address}")
 
-        if username == "host":
+        if client_data['is_host']:
             if host_socket is not None:
                 logger.warning(f"New host connection replacing existing host")
             host_socket = websocket
@@ -229,8 +254,32 @@ async def handle_message(websocket, message, username):
         buzz_queue = []
         drawing_mode = False
         currently_drawing = []
+        # Reset all scores
+        for player in player_scores:
+            player_scores[player] = 0
         await broadcast_to_clients("RESET_GAME")
         await update_clients()
+    
+    elif message.startswith("TOGGLE_SCOREBOARD:") and websocket == host_socket:
+        enabled = message.split(":")[1] == "ON"
+        scoreboard_enabled = enabled
+        logger.info(f"Host set scoreboard to {enabled}")
+        await update_clients()
+    
+    elif message.startswith("SCORE_UPDATE:") and websocket == host_socket:
+        try:
+            parts = message.split(":")
+            if len(parts) >= 3:
+                player_name = parts[1]
+                score_change = int(parts[2])
+                if player_name in player_scores:
+                    player_scores[player_name] += score_change
+                    logger.info(f"Host updated {player_name}'s score by {score_change} to {player_scores[player_name]}")
+                    await update_clients()
+                else:
+                    logger.warning(f"Score update for unknown player: {player_name}")
+        except (ValueError, IndexError) as e:
+            logger.warning(f"Invalid score update format: {message}, error: {e}")
         
     elif message.startswith("FINAL_ANSWER:") and websocket != host_socket:
         # Validate final answer format and length
@@ -345,7 +394,7 @@ async def handle_message(websocket, message, username):
 
 async def cleanup_client(websocket):
     """Clean up client connection and update game state"""
-    global host_socket, currently_drawing
+    global host_socket, currently_drawing, player_scores
     
     if websocket in client_info:
         username = client_info[websocket].get('username', 'unknown')
@@ -366,6 +415,10 @@ async def cleanup_client(websocket):
         if is_host and websocket == host_socket:
             host_socket = None
             logger.warning("Host disconnected")
+        else:
+            # Keep player score even if disconnected (they might reconnect)
+            # Score will persist until game reset
+            logger.info(f"Player {username} disconnected, score preserved: {player_scores.get(username, 0)}")
         
         del client_info[websocket]
         
@@ -390,12 +443,28 @@ async def safe_send(websocket, message):
 
 async def update_clients(win_player=None):
     """Update all clients with current game state"""
+    global scoreboard_enabled, player_scores
+    
     if not clients:
         return
     
     # Get list of connected non-host players
     connected_names = [info['username'] for info in client_info.values() if info['username'] and not info['is_host']]
-    message = json.dumps({"queue": buzz_queue, "win_player": win_player, "connected_players": connected_names, "buzz_lock": buzz_lock})
+    
+    # Build game state message
+    game_state = {
+        "queue": buzz_queue,
+        "win_player": win_player,
+        "connected_players": connected_names,
+        "buzz_lock": buzz_lock,
+        "scoreboard_enabled": scoreboard_enabled
+    }
+    
+    # Include scores if scoreboard is enabled
+    if scoreboard_enabled:
+        game_state["scores"] = player_scores
+    
+    message = json.dumps(game_state)
     failed_clients = []
     
     for client in clients.copy():  # Use copy to avoid modification during iteration

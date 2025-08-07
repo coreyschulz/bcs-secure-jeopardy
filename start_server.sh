@@ -95,6 +95,10 @@ if [ "$LOCAL_ONLY" = false ]; then
     GAME_ID=$(echo $NGROK_HOST | grep -o '^[^.]*')
 fi
 
+# Generate host password
+HOST_PASSWORD=$(python3 -c "import uuid; print(str(uuid.uuid4()))")
+export HOST_PASSWORD
+
 # Start the Python server in the background
 echo "🚀 Starting WebSocket server on port 9999..."
 python3 server.py &
@@ -116,6 +120,8 @@ if [ "$LOCAL_ONLY" = false ]; then
     echo "📱 Players can join at: $JOIN_LINK"
     echo "🏠 Host panel: $HOST_LINK"
     echo ""
+    echo "🔑 Host password: $HOST_PASSWORD"
+    echo ""
     echo "🌐 WebSocket URL: $NGROK_HOST"
     echo ""
 else
@@ -126,6 +132,8 @@ else
     echo "📱 Players on your network can connect using:"
     echo "   localhost:9999 (on this computer)"
     echo "   $(hostname -I | awk '{print $1}'):9999 (from other devices)"
+    echo ""
+    echo "🔑 Host password: $HOST_PASSWORD"
     echo ""
 fi
 

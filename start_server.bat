@@ -80,7 +80,10 @@ if "%LOCAL_ONLY%"=="false" (
     for /f "tokens=1 delims=." %%a in ("!NGROK_HOST!") do set GAME_ID=%%a
 )
 
-REM Start the Python server
+REM Generate host password
+for /f %%i in ('python -c "import uuid; print(str(uuid.uuid4()))"') do set HOST_PASSWORD=%%i
+
+REM Start the Python server with password
 echo Starting WebSocket server on port 9999...
 start /b python server.py
 
@@ -100,6 +103,8 @@ if "%LOCAL_ONLY%"=="false" (
     echo Players can join at: !JOIN_LINK!
     echo Host panel: !HOST_LINK!
     echo.
+    echo Host password: !HOST_PASSWORD!
+    echo.
     echo WebSocket URL: !NGROK_HOST!
     echo.
 ) else (
@@ -117,6 +122,8 @@ if "%LOCAL_ONLY%"=="false" (
         goto :found_ip
     )
     :found_ip
+    echo.
+    echo Host password: !HOST_PASSWORD!
     echo.
 )
 
