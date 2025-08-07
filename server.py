@@ -191,7 +191,7 @@ async def handle_client(websocket):
         await cleanup_client(websocket)
 
 async def handle_message(websocket, message, username):
-    global buzz_lock, buzz_queue, host_socket, drawing_mode, currently_drawing
+    global buzz_lock, buzz_queue, host_socket, drawing_mode, currently_drawing, scoreboard_enabled, player_scores
     
     client_data = client_info.get(websocket, {})
     
